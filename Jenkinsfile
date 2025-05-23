@@ -46,6 +46,7 @@ pipeline {
         stage('Sonar Analysis') {
             environment {
                 scannerhome = tool "${SONARSCANNER}"
+                SONAR_SCANNER_OPTS = "--add-opens java.base/java.lang=ALL-UNNAMED"
             }
             steps {
                withSonarQubeEnv("${SONARSERVER}") {
@@ -56,8 +57,7 @@ pipeline {
                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
                    -Dsonar.junit.reportsPath=target/surefire-reports/ \
                    -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
-                   -Dsonar.scanner.jvmAdditionalOpts="--add-opens java.base/java.lang=ALL-UNNAMED"'''
+                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
               }
             }
 
